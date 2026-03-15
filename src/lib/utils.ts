@@ -25,27 +25,25 @@ export function replaceLatLonInEmbedUrl(embedUrl: string, lat: number, lon: numb
 }
 
 /**
- * Build Google Maps *embed* iframe URL from lat/lon.
- * Uses the /embed?pb= format which Google allows in iframes (unlike the regular maps URL).
- * pb = view-only map centered at lat, lon (no marker pin).
+ * Update lat, lon and zoom (scale) in a known-good Google Maps embed URL.
+ * Building pb from scratch often gets "Invalid pb parameter" from Google; replacing
+ * only !1d (scale), !2d (lon), !3d (lat) in an existing URL is reliable.
  */
-export function buildGoogleMapEmbedUrl(lat: number, lon: number, zoom = 12): string {
+export function buildGoogleMapEmbedUrl(
+  baseEmbedUrl: string,
+  lat: number,
+  lon: number,
+  zoom = 12
+): string {
   const scale = zoomToEmbedScale(zoom)
-  const ts = Date.now()
-  const pb = [
-    '!1m14',        // view only, no marker
-    '!1m12',
-    '!1m3',
-    `!1d${scale}`,
-    `!2d${lon}`,
-    `!3d${lat}`,
-    '!2m3!1f0!2f0!3f0',
-    '!3m2!1i1024!2i768!4f13.1',
-    '!3m2!1svi!2s',
-    `!4v${ts}`,
-    '!5m2!1svi!2s',
-  ].join('')
-  return `https://www.google.com/maps/embed?pb=${pb}`
+  const match = baseEmbedUrl.match(/^(.+\?pb=)(.+)$/)
+  if (!match) return baseEmbedUrl
+  const [, prefix, pb] = match
+  const updatedPb = pb
+    .replace(/!1d[\d.]+/, `!1d${scale}`)
+    .replace(/!2d-?[\d.]+/, `!2d${lon}`)
+    .replace(/!3d-?[\d.]+/, `!3d${lat}`)
+  return `${prefix}${updatedPb}`
 }
 
 function zoomToEmbedScale(zoom: number): number {
@@ -56,6 +54,9 @@ function zoomToEmbedScale(zoom: number): number {
     13: 3354,
     14: 2000,
     15: 1200,
+    16: 600,
   }
+  if (zoom <= 9) return 12000
+  if (zoom >= 17) return 600
   return feetPerZoom[zoom] ?? 3354
 }
