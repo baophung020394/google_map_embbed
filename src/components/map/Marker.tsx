@@ -17,7 +17,7 @@ export function Marker({ listing, x, y, active, onClick, className }: MarkerProp
       type="button"
       onClick={onClick}
       className={cn(
-        'absolute z-10 flex cursor-pointer flex-col items-center drop-shadow-md transition-transform hover:scale-110',
+        'absolute z-10 flex cursor-pointer flex-col items-center transition-transform hover:scale-110',
         active && 'scale-110',
         className
       )}
@@ -29,15 +29,21 @@ export function Marker({ listing, x, y, active, onClick, className }: MarkerProp
       title={listing.title}
       aria-label={listing.title}
     >
-      <MapPin
+      <span
         className={cn(
-          'h-8 w-8 text-red-600',
-          active && 'fill-red-600 text-red-700'
+          'flex flex-shrink-0 items-center justify-center rounded-full p-1 shadow-md ring-2 ring-white',
+          'bg-red-500',
+          active && 'bg-red-600 ring-[3px]'
         )}
-        aria-hidden
-      />
+      >
+        <MapPin
+          className="h-5 w-5 text-white drop-shadow-sm"
+          fill="currentColor"
+          aria-hidden
+        />
+      </span>
       {active && (
-        <span className="mt-0.5 max-w-[120px] truncate rounded bg-white px-2 py-0.5 text-xs font-medium text-slate-800 shadow-sm">
+        <span className="mt-1 max-w-[120px] truncate rounded bg-white px-2 py-0.5 text-xs font-medium text-slate-800 shadow-sm">
           {listing.title}
         </span>
       )}
