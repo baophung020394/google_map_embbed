@@ -22,6 +22,7 @@ export function CitySidebar({
   selectedArea,
   onSelectArea,
   open,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   width = 340,
   className = '',
 }: CitySidebarProps) {
