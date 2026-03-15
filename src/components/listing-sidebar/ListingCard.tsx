@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Bed, Bath, Square, MapPin } from 'lucide-react'
 import type { Listing } from '@/types/listing'
 import { cn } from '@/lib/utils'
@@ -15,15 +16,10 @@ function formatPrice(price: number): string {
   }).format(price)
 }
 
-export function ListingCard({ listing, className }: ListingCardProps) {
-  const details: string[] = [
-    `${listing.bedrooms} beds`,
-    `${listing.bathrooms} baths`,
-  ]
-  if (listing.squareFeet != null) {
-    details.push(`${listing.squareFeet.toLocaleString()} sqft`)
-  }
+const cardImage = (listing: Listing) =>
+  listing.imageUrl ?? listing.list_thumb_nails[0]
 
+export function ListingCard({ listing, className }: ListingCardProps) {
   return (
     <article
       className={cn(
@@ -31,13 +27,15 @@ export function ListingCard({ listing, className }: ListingCardProps) {
         className
       )}
     >
-      <div className="aspect-[5/3] w-full overflow-hidden bg-slate-100">
-        <img
-          src={listing.imageUrl}
-          alt=""
-          className="h-full w-full object-cover"
-        />
-      </div>
+      <Link to={`/property/${listing.id}`} className="block">
+        <div className="aspect-[5/3] w-full overflow-hidden bg-slate-100">
+          <img
+            src={cardImage(listing)}
+            alt=""
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
       <div className="p-3">
         <h3 className="font-semibold text-slate-800 line-clamp-2">
           {listing.title}
@@ -51,12 +49,10 @@ export function ListingCard({ listing, className }: ListingCardProps) {
             <Bath className="h-3.5 w-3.5" aria-hidden />
             <span>{listing.bathrooms} baths</span>
           </li>
-          {listing.squareFeet != null && (
-            <li className="flex items-center gap-1">
-              <Square className="h-3.5 w-3.5" aria-hidden />
-              <span>{listing.squareFeet.toLocaleString()} sqft</span>
-            </li>
-          )}
+          <li className="flex items-center gap-1">
+            <Square className="h-3.5 w-3.5" aria-hidden />
+            <span>{listing.sqft.toLocaleString()} sqft</span>
+          </li>
         </ul>
         <p className="mt-2 text-lg font-semibold text-violet-700">
           {formatPrice(listing.price)}
@@ -66,6 +62,7 @@ export function ListingCard({ listing, className }: ListingCardProps) {
           <span className="line-clamp-2">{listing.address}</span>
         </p>
       </div>
+      </Link>
     </article>
   )
 }
