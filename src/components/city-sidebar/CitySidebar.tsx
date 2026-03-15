@@ -26,6 +26,7 @@ export function CitySidebar({
   width = 340,
   className = '',
 }: CitySidebarProps) {
+  console.log('width', width)
   return (
     <motion.aside
       className={`fixed right-0 top-0 z-10 flex h-full w-full flex-col border-l border-slate-200 bg-white shadow-xl md:w-[340px] ${className}`}
