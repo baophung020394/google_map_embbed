@@ -15,6 +15,15 @@ function defaultSeller(name: string): ListingSeller {
   }
 }
 
+/** Deterministic offset from listing id so markers are clearly spread (no stacking) */
+function listingOffset(id: string): { lat: number; lng: number } {
+  const hash = id.split('').reduce((a, c) => a + c.charCodeAt(0), 0)
+  const step = 0.008 // ~800m per step; spread ~±0.08° (~8–9 km) so pins are clearly separate
+  const latOffset = ((hash % 21) - 10) * step
+  const lngOffset = (((hash * 7) % 21) - 10) * step
+  return { lat: latOffset, lng: lngOffset }
+}
+
 /** Create a full Listing for detail page (used in MOCK_LISTINGS_BY_CITY) */
 function createListing(
   base: {
@@ -34,6 +43,7 @@ function createListing(
   overrides: Partial<Pick<Listing, 'description' | 'year_built' | 'lot_size' | 'property_type' | 'seller'>> = {}
 ): Listing {
   const thumbs = thumbnails(base.imageSeed)
+  const offset = listingOffset(base.id)
   return {
     id: base.id,
     title: base.title,
@@ -51,7 +61,7 @@ function createListing(
     lot_size: overrides.lot_size ?? Math.round(base.sqft * 1.5),
     property_type: overrides.property_type ?? (base.bedrooms <= 2 ? 'Condo' : 'Single Family'),
     seller: overrides.seller ?? defaultSeller('Sarah Johnson'),
-    location: { lat: base.lat, lng: base.lng },
+    location: { lat: base.lat + offset.lat, lng: base.lng + offset.lng },
     imageUrl: thumbs[0],
   }
 }

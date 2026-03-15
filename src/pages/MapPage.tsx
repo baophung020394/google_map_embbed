@@ -65,6 +65,7 @@ export function MapPage() {
         defaultLat={DALLAS_FORT_WORTH_DEFAULT.lat}
         defaultLon={DALLAS_FORT_WORTH_DEFAULT.lon}
         defaultZoom={DALLAS_FORT_WORTH_DEFAULT.zoom}
+        listings={listings}
       />
 
       <ListingSidebar
