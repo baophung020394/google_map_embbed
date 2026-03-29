@@ -25,7 +25,12 @@ function lucideDivIcon(
           filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.4))',
         },
       },
-      createElement(Icon, { size: svgSize, strokeWidth: 2.5 })
+      createElement(Icon, {
+        size: svgSize,
+        strokeWidth: 2,
+        fill: color,
+        stroke: color,
+      })
     )
   )
   return L.divIcon({

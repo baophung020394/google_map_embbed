@@ -31,14 +31,16 @@ export function Marker({ listing, x, y, active, onClick, className }: MarkerProp
     >
       <span
         className={cn(
-          'flex flex-shrink-0 items-center justify-center rounded-full p-1 shadow-md ring-2 ring-white',
-          'bg-red-500',
-          active && 'bg-red-600 ring-[3px]'
+          'flex flex-shrink-0 items-center justify-center rounded-full p-1.5 shadow-md',
+          'bg-red-600',
+          active && 'bg-red-700'
         )}
       >
         <MapPin
-          className="h-5 w-5 text-white drop-shadow-sm"
+          className="h-5 w-5 text-white"
           fill="currentColor"
+          stroke="currentColor"
+          strokeWidth={2}
           aria-hidden
         />
       </span>

@@ -22,8 +22,8 @@ export function MapPlaceSidebar({
     <div className="flex h-full min-h-0 flex-col bg-slate-900 text-slate-100">
       <div className="flex items-center justify-between border-b border-slate-700 px-3 py-3">
         <div className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-600/25 text-emerald-400 ring-1 ring-emerald-500/40">
-            <MapPin className="h-4 w-4" strokeWidth={2.5} />
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500 text-white shadow-sm">
+            <MapPin className="h-4 w-4 fill-white stroke-white" strokeWidth={2} />
           </span>
           <h2 className="text-sm font-semibold tracking-tight">Location details</h2>
         </div>

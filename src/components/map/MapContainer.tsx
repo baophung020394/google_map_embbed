@@ -548,9 +548,9 @@ export function MapContainer({
       </motion.aside>
 
       <div className="pointer-events-none absolute left-3 right-3 top-3 z-[500] flex justify-center">
-        <div className="pointer-events-auto flex w-full max-w-2xl items-start gap-1.5 rounded-xl bg-white/95 p-1.5 shadow-md ring-1 ring-slate-200/80">
+        <div className="pointer-events-auto flex w-full max-w-2xl items-start gap-1.5 rounded-xl bg-white/95 p-1.5 shadow-md">
           <div className="relative min-w-0 flex-1">
-            <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 fill-violet-600 stroke-violet-600 text-violet-600" strokeWidth={2.5} />
             <input
               type="search"
               value={searchQuery}
@@ -599,35 +599,43 @@ export function MapContainer({
             )}
           </div>
 
-          <div className="flex shrink-0 items-center gap-0.5 rounded-lg border border-slate-200 bg-slate-50/90 p-0.5">
+          <div className="flex shrink-0 items-center gap-1 rounded-lg bg-slate-100 p-1">
             <button
               type="button"
               onClick={toggleDirectionsSidebar}
               className={cn(
                 'rounded-md p-2 transition-colors',
                 leftPanel === 'directions'
-                  ? 'bg-slate-800 text-white'
-                  : 'text-slate-600 hover:bg-white hover:text-slate-900'
+                  ? 'bg-violet-600 text-white shadow-sm'
+                  : 'bg-white text-violet-600 shadow-sm hover:bg-violet-50'
               )}
               title="Directions"
               aria-label="Directions"
             >
-              <Signpost className="h-4 w-4" />
+              <Signpost className="h-4 w-4 fill-current stroke-current" strokeWidth={2} />
             </button>
             {onMarkersToggle && (
               <button
                 type="button"
                 onClick={onMarkersToggle}
                 className={cn(
-                  'rounded-md p-2 transition-colors',
+                  'rounded-md bg-white p-2 shadow-sm transition-colors hover:bg-slate-50',
                   showMarkers
-                    ? 'text-slate-800 hover:bg-white'
-                    : 'text-slate-400 hover:bg-white'
+                    ? 'text-red-600 hover:bg-red-50'
+                    : 'text-slate-400 hover:text-slate-500'
                 )}
                 title={showMarkers ? 'Hide listing markers' : 'Show listing markers'}
                 aria-label={showMarkers ? 'Hide markers' : 'Show markers'}
               >
-                <MapPin className="h-4 w-4" />
+                <MapPin
+                  className={cn(
+                    'h-4 w-4',
+                    showMarkers
+                      ? 'fill-red-600 stroke-red-600'
+                      : 'fill-slate-400 stroke-slate-400'
+                  )}
+                  strokeWidth={2}
+                />
               </button>
             )}
             {onZoomChange && (
@@ -635,20 +643,20 @@ export function MapContainer({
                 <button
                   type="button"
                   onClick={() => handleZoomClick(-1)}
-                  className="rounded-md p-2 text-slate-600 hover:bg-white"
+                  className="rounded-md bg-white p-2 text-sky-600 shadow-sm hover:bg-sky-50"
                   title="Zoom out"
                   aria-label="Zoom out"
                 >
-                  <ZoomOut className="h-4 w-4" />
+                  <ZoomOut className="h-4 w-4 fill-sky-600 stroke-sky-600" strokeWidth={2} />
                 </button>
                 <button
                   type="button"
                   onClick={() => handleZoomClick(1)}
-                  className="rounded-md p-2 text-slate-600 hover:bg-white"
+                  className="rounded-md bg-white p-2 text-sky-600 shadow-sm hover:bg-sky-50"
                   title="Zoom in"
                   aria-label="Zoom in"
                 >
-                  <ZoomIn className="h-4 w-4" />
+                  <ZoomIn className="h-4 w-4 fill-sky-600 stroke-sky-600" strokeWidth={2} />
                 </button>
               </>
             )}
