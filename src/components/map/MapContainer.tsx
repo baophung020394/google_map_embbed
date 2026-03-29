@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { createListingPriceIcon } from '@/lib/listingPriceMarkerIcon'
 import { motion } from 'framer-motion'
 import {
   ExternalLink,
@@ -41,7 +42,6 @@ import {
   type OsrmProfile,
 } from '@/lib/osrm'
 import {
-  listingMapIcon,
   routeFromMapIcon,
   routeToMapIcon,
   searchResultMapIcon,
@@ -134,6 +134,30 @@ function MapClickReverse({
     },
   })
   return null
+}
+
+function ListingPriceMarker({ listing }: { listing: Listing }) {
+  const icon = useMemo(
+    () =>
+      createListingPriceIcon(listing.price, {
+        vip: Boolean(listing.isVip),
+      }),
+    [listing.price, listing.isVip]
+  )
+  return (
+    <Marker
+      position={[listing.location.lat, listing.location.lng]}
+      icon={icon}
+    >
+      <Popup
+        closeButton={false}
+        maxWidth={280}
+        className="listing-map-popup [&_.leaflet-popup-content]:m-0 [&_.leaflet-popup-content]:rounded-xl [&_.leaflet-popup-tip]:bg-white"
+      >
+        <ListingPopupCard listing={listing} variant="leaflet" />
+      </Popup>
+    </Marker>
+  )
 }
 
 function MarkerAutoOpenPopup({
@@ -438,15 +462,7 @@ export function MapContainer({
 
         {showMarkers &&
           listings.map((listing) => (
-            <Marker
-              key={listing.id}
-              position={[listing.location.lat, listing.location.lng]}
-              icon={listingMapIcon}
-            >
-              <Popup maxWidth={320} className="[&_.leaflet-popup-content]:m-0">
-                <ListingPopupCard listing={listing} />
-              </Popup>
-            </Marker>
+            <ListingPriceMarker key={listing.id} listing={listing} />
           ))}
 
         {routeEndpoints && (

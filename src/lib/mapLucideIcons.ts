@@ -41,14 +41,8 @@ function lucideDivIcon(
   })
 }
 
-/** Property listings — red pin */
-export const listingMapIcon = lucideDivIcon(MapPin, '#dc2626', [32, 40], [16, 40])
-
 /** Quick search result — blue pin */
 export const searchResultMapIcon = lucideDivIcon(MapPin, '#2563eb', [30, 38], [15, 36])
-
-/** Map click / inspect — emerald pin */
-export const inspectMapIcon = lucideDivIcon(MapPin, '#059669', [30, 38], [15, 36])
 
 /** Directions origin — green navigation */
 export const routeFromMapIcon = lucideDivIcon(Navigation, '#16a34a', [32, 40], [16, 40])

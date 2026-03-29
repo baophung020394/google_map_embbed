@@ -38,3 +38,59 @@ body {
   background: transparent !important;
   border: none !important;
 }
+
+/* Listing price tag on map (L.divIcon HTML) */
+.listing-price-marker-root {
+  display: flex !important;
+  justify-content: center;
+}
+
+.listing-price-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.listing-price-marker__chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 168px;
+  background: #0f172a;
+  color: #fff;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  padding: 6px 10px 6px 11px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+}
+
+.listing-price-marker__price {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listing-price-marker__vip {
+  flex-shrink: 0;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: #14b8a6;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.listing-price-marker__tail {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 9px solid #0f172a;
+  margin-top: -1px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
