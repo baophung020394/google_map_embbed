@@ -32,3 +32,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* Custom markers built with L.divIcon (no default Leaflet image assets). */
+.leaflet-div-icon-transparent {
+  background: transparent !important;
+  border: none !important;
+}

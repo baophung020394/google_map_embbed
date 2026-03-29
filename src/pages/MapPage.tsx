@@ -1,5 +1,4 @@
 import { useMemo, useState, useCallback } from 'react'
-import { buildGoogleMapEmbedUrl } from '@/lib/utils'
 import {
   DALLAS_AREAS,
   DALLAS_FORT_WORTH_DEFAULT,
@@ -13,10 +12,6 @@ import { MapContainer } from '@/components/map'
 import { CitySidebar } from '@/components/city-sidebar'
 import { ListingSidebar } from '@/components/listing-sidebar'
 import { SidebarToggleButton } from '@/components/sidebar'
-
-/** Known-good embed URL; we only replace !1d (scale), !2d (lon), !3d (lat) to avoid "Invalid pb" */
-const MAP_EMBED_BASE_URL =
-  'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3354.5868928926525!2d-96.79700000000001!3d32.7766944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzLCsDQ2JzM2LjEiTiA5NsKwNDcnNDkuMiJX!5e0!3m2!1svi!2s!4v1773473727269!5m2!1svi!2s'
 
 const DEFAULT_MAP_ZOOM = 13
 const MIN_ZOOM = 10
@@ -50,22 +45,17 @@ export function MapPage() {
     [selectedCityId]
   )
 
-  const centerLat = selectedArea?.lat ?? DALLAS_FORT_WORTH_DEFAULT.lat
-  const centerLon = selectedArea?.lon ?? DALLAS_FORT_WORTH_DEFAULT.lon
-
-  const mapEmbedUrl = useMemo(
-    () => buildGoogleMapEmbedUrl(MAP_EMBED_BASE_URL, centerLat, centerLon, mapZoom),
-    [centerLat, centerLon, mapZoom]
-  )
-
   const listings = useMemo(
     () => (selectedCityId ? getListingsByCityId(selectedCityId) : []),
     [selectedCityId]
   )
 
-  const handleSelectArea = useCallback((area: DallasArea) => {
-    selectCity(area.id)
-  }, [selectCity])
+  const handleSelectArea = useCallback(
+    (area: DallasArea) => {
+      selectCity(area.id)
+    },
+    [selectCity]
+  )
 
   const handleZoomChange = useCallback((delta: number) => {
     setMapZoom((z) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z + delta)))
@@ -74,11 +64,9 @@ export function MapPage() {
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden bg-slate-100 md:flex-row">
       <MapContainer
-        embedUrl={mapEmbedUrl}
         selectedArea={selectedArea}
         defaultLat={DALLAS_FORT_WORTH_DEFAULT.lat}
         defaultLon={DALLAS_FORT_WORTH_DEFAULT.lon}
-        defaultZoom={DALLAS_FORT_WORTH_DEFAULT.zoom}
         listings={listings}
         showMarkers={showMarkers}
         onMarkersToggle={() => setShowMarkers((v) => !v)}

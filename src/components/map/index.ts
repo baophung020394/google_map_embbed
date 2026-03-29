@@ -1,4 +1,6 @@
 export { MapContainer } from './MapContainer'
+export { DirectionsPanel } from './DirectionsPanel'
+export { MapPlaceSidebar } from './MapPlaceSidebar'
 export { MapMarkerOverlay } from './MapMarkerOverlay'
 export { Marker } from './Marker'
 export { MarkerPopup } from './MarkerPopup'
