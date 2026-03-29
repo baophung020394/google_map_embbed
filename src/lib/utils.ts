@@ -10,6 +10,11 @@ export function buildGoogleMapUrl(lat: number, lon: number, zoom = 12): string {
   return `https://www.google.com/maps?q=${lat},${lon}&z=${zoom}`
 }
 
+/** OpenStreetMap in the browser (hash URL used by osm.org). */
+export function buildOpenStreetMapUrl(lat: number, lon: number, zoom = 12): string {
+  return `https://www.openstreetmap.org/#map=${zoom}/${lat}/${lon}`
+}
+
 /**
  * Replace latitude and longitude in an existing Google Maps embed URL (pb parameter).
  * Keeps the same embed structure so Google accepts it; only !2d (lon) and !3d (lat) are updated.
