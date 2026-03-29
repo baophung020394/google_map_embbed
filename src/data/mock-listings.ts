@@ -40,10 +40,13 @@ function createListing(
     lat: number
     lng: number
   },
-  overrides: Partial<Pick<Listing, 'description' | 'year_built' | 'lot_size' | 'property_type' | 'seller'>> = {}
+  overrides: Partial<
+    Pick<Listing, 'description' | 'year_built' | 'lot_size' | 'property_type' | 'seller' | 'isVip'>
+  > = {}
 ): Listing {
   const thumbs = thumbnails(base.imageSeed)
   const offset = listingOffset(base.id)
+  const idSum = base.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0)
   return {
     id: base.id,
     title: base.title,
@@ -63,6 +66,7 @@ function createListing(
     seller: overrides.seller ?? defaultSeller('Sarah Johnson'),
     location: { lat: base.lat + offset.lat, lng: base.lng + offset.lng },
     imageUrl: thumbs[0],
+    isVip: overrides.isVip ?? idSum % 4 === 0,
   }
 }
 
@@ -116,7 +120,7 @@ export const MOCK_LISTINGS_BY_CITY: Record<string, Listing[]> = {
     createListing({ id: 'lst-d3', title: 'Historic Downtown Townhouse', address: '789 Elm St, Dallas, TX', city: CITY_NAMES['dallas-downtown']!, price: 389_000, bedrooms: 4, bathrooms: 3, sqft: 2100, imageSeed: 'd3', ...coords('dallas-downtown') }),
     createListing({ id: 'lst-d4', title: 'Akard Plaza View Condo', address: '100 N Akard St, Dallas, TX', city: CITY_NAMES['dallas-downtown']!, price: 520_000, bedrooms: 2, bathrooms: 2, sqft: 1350, imageSeed: 'd4', ...coords('dallas-downtown') }),
     createListing({ id: 'lst-d5', title: 'Deep Ellum Live-Work Unit', address: '2801 Main St, Dallas, TX', city: CITY_NAMES['dallas-downtown']!, price: 398_000, bedrooms: 2, bathrooms: 1, sqft: 980, imageSeed: 'd5', ...coords('dallas-downtown') }),
-    createListing({ id: 'lst-d6', title: 'Uptown High-Rise', address: '2800 Blackburn St, Dallas, TX', city: CITY_NAMES['dallas-downtown']!, price: 715_000, bedrooms: 3, bathrooms: 2, sqft: 1650, imageSeed: 'd6', ...coords('dallas-downtown') }),
+    createListing({ id: 'lst-d6', title: 'Uptown High-Rise', address: '2800 Blackburn St, Dallas, TX', city: CITY_NAMES['dallas-downtown']!, price: 1_185_000, bedrooms: 3, bathrooms: 2, sqft: 1650, imageSeed: 'd6', ...coords('dallas-downtown') }),
     createListing({ id: 'lst-d7', title: 'Civic Garden Area Condo', address: '1900 Young St, Dallas, TX', city: CITY_NAMES['dallas-downtown']!, price: 445_000, bedrooms: 2, bathrooms: 2, sqft: 1180, imageSeed: 'd7', ...coords('dallas-downtown') }),
     createListing({ id: 'lst-d8', title: 'Design District Loft', address: '1025 Dragon St, Dallas, TX', city: CITY_NAMES['dallas-downtown']!, price: 565_000, bedrooms: 3, bathrooms: 2, sqft: 1920, imageSeed: 'd8', ...coords('dallas-downtown') }),
     createListing({ id: 'lst-d9', title: 'South Side Townhome', address: '1200 S Lamar St, Dallas, TX', city: CITY_NAMES['dallas-downtown']!, price: 412_000, bedrooms: 3, bathrooms: 2, sqft: 1550, imageSeed: 'd9', ...coords('dallas-downtown') }),
@@ -124,7 +128,7 @@ export const MOCK_LISTINGS_BY_CITY: Record<string, Listing[]> = {
   ],
   'fort-worth': [
     createListing({ id: 'lst-fw1', title: 'Sundance Square Living', address: '100 Houston St, Fort Worth, TX', city: CITY_NAMES['fort-worth']!, price: 375_000, bedrooms: 3, bathrooms: 2, sqft: 1650, imageSeed: 'fw1', ...coords('fort-worth') }),
-    createListing({ id: 'lst-fw2', title: 'Near Cultural District', address: '200 Camp Bowie Blvd, Fort Worth, TX', city: CITY_NAMES['fort-worth']!, price: 499_000, bedrooms: 4, bathrooms: 3, sqft: 2400, imageSeed: 'fw2', ...coords('fort-worth') }),
+    createListing({ id: 'lst-fw2', title: 'Near Cultural District', address: '200 Camp Bowie Blvd, Fort Worth, TX', city: CITY_NAMES['fort-worth']!, price: 925_000, bedrooms: 4, bathrooms: 3, sqft: 2400, imageSeed: 'fw2', ...coords('fort-worth') }),
     createListing({ id: 'lst-fw3', title: 'West 7th Condo', address: '2900 Crockett St, Fort Worth, TX', city: CITY_NAMES['fort-worth']!, price: 335_000, bedrooms: 2, bathrooms: 2, sqft: 1100, imageSeed: 'fw3', ...coords('fort-worth') }),
     createListing({ id: 'lst-fw4', title: 'Near Fort Worth Stockyards', address: '128 E Exchange Ave, Fort Worth, TX', city: CITY_NAMES['fort-worth']!, price: 425_000, bedrooms: 3, bathrooms: 2, sqft: 1750, imageSeed: 'fw4', ...coords('fort-worth') }),
     createListing({ id: 'lst-fw5', title: 'South Main Townhome', address: '500 S Main St, Fort Worth, TX', city: CITY_NAMES['fort-worth']!, price: 368_000, bedrooms: 3, bathrooms: 2, sqft: 1580, imageSeed: 'fw5', ...coords('fort-worth') }),
@@ -168,7 +172,7 @@ export const MOCK_LISTINGS_BY_CITY: Record<string, Listing[]> = {
   ],
   frisco: [
     createListing({ id: 'lst-fr1', title: 'Stonebriar Area Home', address: '8800 Gaylord Pkwy, Frisco, TX', city: CITY_NAMES.frisco!, price: 589_000, bedrooms: 5, bathrooms: 4, sqft: 3200, imageSeed: 'fr1', ...coords('frisco') }),
-    createListing({ id: 'lst-fr2', title: 'Starwood Estate', address: '5500 Starwood Dr, Frisco, TX', city: CITY_NAMES.frisco!, price: 698_000, bedrooms: 5, bathrooms: 4, sqft: 3580, imageSeed: 'fr2', ...coords('frisco') }),
+    createListing({ id: 'lst-fr2', title: 'Starwood Estate', address: '5500 Starwood Dr, Frisco, TX', city: CITY_NAMES.frisco!, price: 1_425_000, bedrooms: 5, bathrooms: 4, sqft: 3580, imageSeed: 'fr2', ...coords('frisco') }),
     createListing({ id: 'lst-fr3', title: 'Near FC Dallas Stadium', address: '9200 World Cup Way, Frisco, TX', city: CITY_NAMES.frisco!, price: 525_000, bedrooms: 4, bathrooms: 3, sqft: 2750, imageSeed: 'fr3', ...coords('frisco') }),
     createListing({ id: 'lst-fr4', title: 'Frisco Square Condo', address: '6800 Main St, Frisco, TX', city: CITY_NAMES.frisco!, price: 445_000, bedrooms: 3, bathrooms: 2, sqft: 1680, imageSeed: 'fr4', ...coords('frisco') }),
     createListing({ id: 'lst-fr5', title: 'Legacy Drive Townhome', address: '3200 Legacy Dr, Frisco, TX', city: CITY_NAMES.frisco!, price: 478_000, bedrooms: 4, bathrooms: 3, sqft: 2280, imageSeed: 'fr5', ...coords('frisco') }),

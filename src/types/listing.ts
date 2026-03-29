@@ -38,6 +38,8 @@ export interface Listing {
   location: ListingLocation
   /** Card thumbnail; fallback to list_thumb_nails[0] if missing */
   imageUrl?: string
+  /** Featured listing: VIP badge on map chip + popup ribbon */
+  isVip?: boolean
 }
 
 /** City/area with optional listing count (for future API) */
