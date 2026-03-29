@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
-import { useMap } from 'react-leaflet'
-import { Bath, BedDouble, ChevronRight, Maximize2, X } from 'lucide-react'
-import type { Listing } from '@/types/listing'
 import { cn } from '@/lib/utils'
+import type { Listing } from '@/types/listing'
+import { Bath, BedDouble, Maximize2, X } from 'lucide-react'
+import { useMap } from 'react-leaflet'
+import { Link } from 'react-router-dom'
 
 function LeafletPopupCloseButton({ className }: { className?: string }) {
   const map = useMap()
@@ -79,7 +79,7 @@ export function ListingPopupCard({
             target="_blank"
             rel="noopener noreferrer"
           >
-             {listing.title}
+            {listing.title}
             {/* <p
               className="!p-0 line-clamp-2 text-[13px] font-semibold leading-tight text-slate-900"
               title={listing.title}
